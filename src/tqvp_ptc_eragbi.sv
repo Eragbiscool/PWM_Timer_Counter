@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Your Name
+ * Copyright (c) 2025 Eraz
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -100,6 +100,7 @@ wire	[8:0]		rptc_ctrl;	// No RPTC_CTRL register
     logic [dw-1:0]  data_out_reg;   // Data_out register
     logic           polarity;       // Polarity wire
     logic           trigger;        // Trigger register for PWM output wire default value set
+  	logic 			oen_o;
 
 
     //
@@ -313,7 +314,7 @@ wire	[8:0]		rptc_ctrl;	// No RPTC_CTRL register
     // is cleared
      assign user_interrupt 	= 1'b0;
      assign data_ready 		= (data_read_n == 2'b11) ? 1'b0 : 1'b1;
-     assign ui_out 			= 8'b0;
+  	 assign uo_out[7:6] 			= 2'b0;
     //
     // Read PTC registers
     //
