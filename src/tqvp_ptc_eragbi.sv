@@ -6,7 +6,6 @@
 `default_nettype none
 
 
-`include "timescale.sv"
 `include "ptc_defines.sv"
 
 module tqvp_ptc_eragbi (
