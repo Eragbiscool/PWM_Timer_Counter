@@ -7,7 +7,7 @@
 
 
 `include "timescale.sv"
-`include "ptc_defines.v"
+`include "ptc_defines.sv"
 
 module tqvp_ptc_eragbi (
     input         clk,          // Clock - the TinyQV project clock is normally set to 64MHz.
