@@ -26,7 +26,7 @@ async def generate_clock(dut, period_ns=8):
     """Generate clock on dut.clk"""
     cocotb.start_soon(Clock(dut.ui_in[0], period_ns, units="ns").start())
 
-async def wr(self, adr, dat):
+async def wr(adr, dat):
     """Write transaction"""
     await RisingEdge(dut.clk)
     await Timer(1, "ns")
@@ -52,7 +52,7 @@ async def wr(self, adr, dat):
     await RisingEdge(dut.clk)
 
 
-async def rd(self, adr):
+async def rd(adr):
     """Read transaction"""
 
     # await tqv.read_word_reg(adr)
@@ -65,19 +65,19 @@ async def rd(self, adr):
     return result
 
 
-async def setctrl(self, val):
+async def setctrl(val):
     await wr((PTC_RPTC_CTRL << 2), val)
 
 
-async def sethrc(self, val):
+async def sethrc(val):
     await wr((PTC_RPTC_HRC << 2), val)
 
 
-async def setlrc(self, val):
+async def setlrc(val):
     await wr((PTC_RPTC_LRC << 2), val)
 
 
-async def getcntr(self):
+async def getcntr():
     tmp = await rd((PTC_RPTC_CNTR << 2))
     return tmp
 
