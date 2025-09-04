@@ -305,8 +305,9 @@ wire	[8:0]		rptc_ctrl;	// No RPTC_CTRL register
   
       assign user_interrupt = rptc_ctrl[`PTC_RPTC_CTRL_INT];
       
-      assign data_out = (data_read_n == 2'b11)? 32'h00000000 : data_out_reg;
-      assign data_ready = (data_read_n == 2'b11) ? 1'b0 : 1'b1;
+      assign data_out     = (data_read_n == 2'b11)? 32'h00000000 : data_out_reg;
+      assign data_ready   = (data_read_n == 2'b11) ? 1'b0 : 1'b1;
+      assign uo_out[5:0]  = 6'b0;
 `else
 
     //
@@ -314,7 +315,7 @@ wire	[8:0]		rptc_ctrl;	// No RPTC_CTRL register
     // is cleared
      assign user_interrupt 	= 1'b0;
      assign data_ready 		= (data_read_n == 2'b11) ? 1'b0 : 1'b1;
-  	 assign uo_out[7:6] 			= 2'b0;
+     assign uo_out[7:0]     = 8'b0;
     //
     // Read PTC registers
     //
