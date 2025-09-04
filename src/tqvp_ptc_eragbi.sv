@@ -6,7 +6,7 @@
 `default_nettype none
 
 
-`include "ptc_defines.sv"
+`include "ptc_defines.v"
 
 module tqvp_ptc_eragbi (
     input         clk,          // Clock - the TinyQV project clock is normally set to 64MHz.
@@ -79,28 +79,28 @@ wire	[8:0]		rptc_ctrl;	// No RPTC_CTRL register
 //
 // Internal wires & regs
 //
-    logic			rptc_cntr_sel;	// Counter Register(RPTC_CNTR) select
-    logic			rptc_hrc_sel;	// High Reference/Capture Register(RPTC_HRC) select
-    logic			rptc_lrc_sel;	// Low Reference/Capture Register(RPTC_HRC) select
-    logic			rptc_ctrl_sel;	// Control register(RPTC_CTRL) select
-    logic			hrc_match;	    // RPTC_HRC matches RPTC_CNTR
-    logic			lrc_match;	    // RPTC_LRC matches RPTC_CNTR
-    logic			restart;	    // Restart counter when asserted
-    logic			stop;		    // Stop counter when asserted
-    logic			cntr_clk;	    // Counter clock
-    logic			cntr_rst;	    // Counter reset
-    logic			hrc_clk;	    // RPTC_HRC clock
-    logic			lrc_clk;	    // RPTC_LRC clock
-    logic			eclk_gate;	    // ptc_ecgt xored by RPTC_CTRL[NEC]
-    logic			gate;		    // Gate function of ptc_ecgt
-    logic			pwm_rst;	    // Reset of a PWM output
-    logic			pwm_o;	        // PWM output
-    logic			intr;		    // Interrupt reg
-    logic			intr_match;	    // Interrupt match
-    logic [dw-1:0]  data_out_reg;   // Data_out register
-    logic           polarity;       // Polarity wire
-    logic           trigger;        // Trigger register for PWM output wire default value set
-  	logic 			oen_o;
+    wire			rptc_cntr_sel;	// Counter Register(RPTC_CNTR) select
+    wire			rptc_hrc_sel;	// High Reference/Capture Register(RPTC_HRC) select
+    wire			rptc_lrc_sel;	// Low Reference/Capture Register(RPTC_HRC) select
+    wire			rptc_ctrl_sel;	// Control register(RPTC_CTRL) select
+    wire			hrc_match;	    // RPTC_HRC matches RPTC_CNTR
+    wire			lrc_match;	    // RPTC_LRC matches RPTC_CNTR
+    wire			restart;	    // Restart counter when asserted
+    wire			stop;		    // Stop counter when asserted
+    wire			cntr_clk;	    // Counter clock
+    wire			cntr_rst;	    // Counter reset
+    wire			hrc_clk;	    // RPTC_HRC clock
+    wire			lrc_clk;	    // RPTC_LRC clock
+    wire			eclk_gate;	    // ptc_ecgt xored by RPTC_CTRL[NEC]
+    wire			gate;		    // Gate function of ptc_ecgt
+    wire			pwm_rst;	    // Reset of a PWM output
+    reg			    pwm_o;	        // PWM output
+    reg			    intr;		    // Interrupt reg
+    wire			intr_match;	    // Interrupt match
+    reg   [dw-1:0]  data_out_reg;   // Data_out register
+    wire            polarity;       // Polarity wire
+    reg           trigger;        // Trigger register for PWM output wire default value set
+  	wire 			oen_o;
 
 
     //
