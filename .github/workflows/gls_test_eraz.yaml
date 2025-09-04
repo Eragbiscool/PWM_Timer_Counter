@@ -11,6 +11,6 @@ jobs:
           submodules: recursive
 
       - name: GL test
-        uses: Eragbiscool/PWM_Timer_Counter/.github/workflows/gls.yaml
+        uses: Eragbiscool/PWM_Timer_Counter/gls_workflow
         with:
           pdk: sky130
