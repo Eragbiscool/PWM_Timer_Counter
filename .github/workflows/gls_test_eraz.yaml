@@ -1,7 +1,5 @@
 name: gate_level_testing
-on:
-  push:
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 
 jobs:
   gl_test:
