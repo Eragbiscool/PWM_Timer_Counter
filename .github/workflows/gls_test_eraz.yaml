@@ -11,6 +11,6 @@ jobs:
           submodules: recursive
 
       - name: GL test
-        uses: TinyTapeout/tt-gds-action/gl_test@ttsky25a
+        uses: Eragbiscool/PWM_Timer_Counter/.github/workflows/gls.yaml
         with:
           pdk: sky130
