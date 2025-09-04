@@ -3,7 +3,7 @@
 
 # defaults
 SIM ?= icarus
-TOPLEVEL_LANG ?= Verilog
+TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = ptc_defines.v tqvp_ptc_eragbi.v
 ADDITIONAL_SOURCES = tt_wrapper.v test_harness/*.sv
