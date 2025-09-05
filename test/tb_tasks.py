@@ -100,11 +100,11 @@ async def test_eclk(dut,tqv):
     # Enable PTC
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
-    cocotb.log.info(f"l1 = {l1}")
+    cocotb.log.info(f"l1 = {getcntr(dut,tqv)}")
     # Wait for time to advance
     await Timer(400, "ns")
     cocotb.log.info("Wait Done")
-    cocotb.log.info(f"l1 = {l1}")
+    cocotb.log.info(f"l1 = {getcntr(dut,tqv)}")
 
     l1 = await getcntr(dut,tqv)
     cocotb.log.info("L1 collected")
