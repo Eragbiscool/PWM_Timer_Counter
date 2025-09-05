@@ -84,8 +84,8 @@ async def getcntr(dut,tqv):
     tmp = await rd(dut,(PTC_RPTC_CNTR << 2),tqv)
     return tmp
 
-async def ext_clock(dut):
-    for _ in range(1092):
+async def ext_clock(dut,cyc):
+    for _ in range(cyc):
         dut.ui_in[0].value = 1
         await Timer(3, units="ns")   # low for 1 ns
         dut.ui_in[0].value = 0
@@ -133,7 +133,7 @@ async def test_eclk(dut,tqv):
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
     # await Timer(800, "ns")
-    await ext_clock(dut)
+    await ext_clock(dut,1271)
 
     cocotb.log.info("Wait Done")
 
@@ -144,10 +144,10 @@ async def test_eclk(dut,tqv):
     cocotb.log.info(f"l1 = {l1} and l2= {l2}")
 
     # Compare
-    if l2 - l1 == 49:
-        cocotb.log.info("OK")
-    else:
-        cocotb.log.error(f"FAILED: expected 49, got {l2 - l1}")
+    assert l2 - l1 == 49
+    #     cocotb.log.info("OK")
+    # else:
+    #     cocotb.log.error(f"FAILED: expected 49, got {l2 - l1}")
 
 
 
