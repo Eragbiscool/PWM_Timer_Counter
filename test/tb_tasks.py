@@ -96,29 +96,24 @@ async def test_eclk(dut,tqv):
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
 
     cocotb.log.info("Control Reset")
-    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
+    
 
     # Set HRC and LRC to max
     await sethrc(dut,(0xFFFFFFFF),tqv)
     cocotb.log.info("High HRC Set")
-    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
     await setlrc(dut,(0xFFFFFFFF),tqv)
     cocotb.log.info("High LRC Set")
-    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
     # Enable PTC
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
-    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
     # Wait for time to advance
     await Timer(400, "ns")
     cocotb.log.info("Wait Done")
-    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
 
     l1 = await getcntr(dut,tqv)
     cocotb.log.info("L1 collected")
     # Phase 2
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
-    cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
     cocotb.log.info("Control Reset")
     # await setctrl(dut,(1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK),tqv)
     await setctrl(dut,3,tqv)
@@ -129,9 +124,7 @@ async def test_eclk(dut,tqv):
     #     # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
-    cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
     await Timer(800, "ns")
-    cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
     # for _ in range(100):
     #     await RisingEdge(dut.clk)
     #     # dut.ui_in[0].value = 0
