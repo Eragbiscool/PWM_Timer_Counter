@@ -98,7 +98,7 @@ async def test_eclk(dut):
     await setlrc(dut,(0xFFFFFFFF))
 
     # Enable PTC
-    await setctrl(dut,(1 << PTC_RPTC_CTRL_EN)
+    await setctrl(dut,(1 << PTC_RPTC_CTRL_EN))
 
     # Wait for time to advance
     await Timer(400, "ns")
