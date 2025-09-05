@@ -1,7 +1,7 @@
 
 
 import cocotb
-from cocotb.triggers import RisingEdge, Timer
+from cocotb.triggers import RisingEdge, Timer, ClockCycles
 from cocotb.clock import Clock
 
 from tqv_reg import spi_write_cpha0, spi_read_cpha0
@@ -32,9 +32,7 @@ async def wr(dut,adr, dat,tqv):
     # await RisingEdge(dut.clk)
     # await Timer(1, "ns")
 
-    # await tqv.write_word_reg(adr, dat)
-    await spi_write_cpha0(dut.clk, dut.uio_in, adr, dat, 2)
-    await spi_write_cpha0(dut.clk, dut.uio_in, adr, dat, 3)
+    await tqv.write_word_reg(adr, dat)
     
     # await RisingEdge(dut.clk)
     # await RisingEdge(dut.clk)
@@ -62,9 +60,9 @@ async def rd(dut,adr,tqv):
 
     # await Timer(1, "ns")
 
-    # result = await tqv.read_word_reg(adr)
+    result = await tqv.read_word_reg(adr)
 
-    result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
+    # result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
     # result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
 
     return result
@@ -129,15 +127,16 @@ async def test_eclk(dut,tqv):
     #     # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
-
-
-    for _ in range(100):
-        await RisingEdge(dut.clk)
-        # dut.ui_in[0].value = 0
-        # await Timer(4, units="ns")
-        # dut.ui_in[0].value = 1
-        # await Timer(4, units="ns")
-        cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
+    cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
+    await ClockCycles(dut.clk, 100)
+    cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
+    # for _ in range(100):
+    #     await RisingEdge(dut.clk)
+    #     # dut.ui_in[0].value = 0
+    #     # await Timer(4, units="ns")
+    #     # dut.ui_in[0].value = 1
+    #     # await Timer(4, units="ns")
+    #     cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
 
     cocotb.log.info("Wait Done")
 
