@@ -106,7 +106,7 @@ async def test_eclk(dut,tqv):
     cocotb.log.info("Wait Done")
     cocotb.log.info(f"l1 = {getcntr(dut,tqv)}")
 
-    l1 = await getcntr(dut,tqv)
+    l1 = getcntr(dut,tqv)
     cocotb.log.info("L1 collected")
     # Phase 2
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
@@ -130,7 +130,7 @@ async def test_eclk(dut,tqv):
 
     cocotb.log.info("Wait Done")
 
-    l2 = await getcntr(dut,tqv)
+    l2 = getcntr(dut,tqv)
     cocotb.log.info("L2 collected")
 
     
