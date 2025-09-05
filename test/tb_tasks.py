@@ -133,7 +133,7 @@ async def test_eclk(dut,tqv):
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
     # await Timer(800, "ns")
-    await ext_clock(dut,1411)
+    await ext_clock(dut,1425)
 
     cocotb.log.info("Wait Done")
 
