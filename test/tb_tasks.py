@@ -144,8 +144,7 @@ async def ptc_verification(dut):
 
     # Equivalent of SV variable initializations
     tqv = TinyQV(dut, PERIPHERAL_NUM)
-
-    dut.ui_in.value = 0
+    await tqv.reset()
 
     clock = Clock(dut.clk, 8, units="ns")
     cocotb.start_soon(clock.start())
