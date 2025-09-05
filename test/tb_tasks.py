@@ -22,8 +22,8 @@ PTC_RPTC_CTRL_CNTRRST = 7
 # Task translations
 # ----------------------------------------------------------------------
 PERIPHERAL_NUM = 0
-async def generate_clock(dut, period_ns=8):
-    cocotb.start_soon(Clock(dut.ui_in[0], period_ns, units="ns").start())
+async def generate_clock(dut,pin, period_ns=8):
+    cocotb.start_soon(Clock(dut.pin, period_ns, units="ns").start())
 
 async def wr(dut,adr, dat):
     await RisingEdge(dut.clk)
@@ -143,6 +143,8 @@ async def ptc_verification(dut):
 
     # Equivalent of SV variable initializations
     tqv = TinyQV(dut, PERIPHERAL_NUM)
+    generate_clock(dut,clk)
+    generate_clock(dut,ui_in)
     # Display banners
     cocotb.log.info("")
     cocotb.log.info("###")
