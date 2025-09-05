@@ -27,8 +27,8 @@ PERIPHERAL_NUM = 0
 #     cocotb.start_soon(Clock(dut.pin, period_ns, units="ns").start())
 
 async def wr(dut,adr, dat,tqv):
-    await RisingEdge(dut.clk)
-    await Timer(1, "ns")
+    # await RisingEdge(dut.clk)
+    # await Timer(1, "ns")
 
     await tqv.write_word_reg(adr, dat)
     
@@ -121,6 +121,8 @@ async def test_eclk(dut,tqv):
 
 
     for _ in range(100):
+        await setctrl(dut,((1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK)),tqv)
+        cocotb.log.info("Control Set")
         dut.ui_in[0].value = 0
         await Timer(4, units="ns")
         dut.ui_in[0].value = 1
