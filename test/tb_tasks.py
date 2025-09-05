@@ -120,7 +120,7 @@ async def test_eclk(dut,tqv):
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
     cocotb.log.info("Control Reset")
     # await setctrl(dut,(1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK),tqv)
-    await setctrl(dut,8'b00000011,tqv)
+    await setctrl(dut,3,tqv)
     cocotb.log.info("Control Set")
 
     # Do 100 external clock cycles
