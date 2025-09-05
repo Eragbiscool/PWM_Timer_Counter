@@ -126,6 +126,7 @@ async def test_eclk(dut,tqv):
     #     # await Timer(8, "ns")
     # await Timer(800, "ns")
     for _ in range(100):
+        await Timer(1, units="ps")
         dut.ui_in[0].value = 1
         await Timer(1, units="ns")
         dut.ui_in[0].value = 0
