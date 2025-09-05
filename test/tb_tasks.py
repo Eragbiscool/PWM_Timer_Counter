@@ -29,42 +29,13 @@ PERIPHERAL_NUM = 0
 #     cocotb.start_soon(Clock(dut.pin, period_ns, units="ns").start())
 
 async def wr(dut,adr, dat,tqv):
-    # await RisingEdge(dut.clk)
-    # await Timer(1, "ns")
-
     await tqv.write_word_reg(adr, dat)
     
-    # await RisingEdge(dut.clk)
-    # await RisingEdge(dut.clk)
-    
-    # dut.data_read_n.value = 0b11
-
-    # # wait 5 cycles
-    # for _ in range(5):
-    #     await RisingEdge(dut.clk)
-
-    # await Timer(1, "ns")
-    # dut.data_write_n.value = we
-
-    # await RisingEdge(dut.clk)
-    # await Timer(1, "ns")
-    # dut.we.value = 0b11
-
-    # await RisingEdge(dut.clk)
+ 
 
 
 async def rd(dut,adr,tqv):
-
-    # await tqv.read_word_reg(adr)
-
-
-    # await Timer(1, "ns")
-
     result = await tqv.read_word_reg(adr)
-
-    # result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
-    # result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
-
     return result
 
 
@@ -90,7 +61,7 @@ async def ext_clock(dut,cyc):
         await Timer(3, units="ns")   # low for 1 ns
         dut.ui_in[0].value = 0
         await Timer(4, units="ns")
-        # await Timer(1, units="ns")   # high for 1 ns
+
 
 # ----------------------------------------------------------------------
 # Test converted from SV "test_eclk" task
@@ -115,6 +86,7 @@ async def test_eclk(dut,tqv):
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
     # Wait for time to advance
+
     await Timer(50, units='ns')
     cocotb.log.info("Wait Done")
 
@@ -123,16 +95,10 @@ async def test_eclk(dut,tqv):
     # Phase 2
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
     cocotb.log.info("Control Reset")
-    # await setctrl(dut,(1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK),tqv)
-    await setctrl(dut,3,tqv)
+    await setctrl(dut,(1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK),tqv)
     cocotb.log.info("Control Set")
 
-    # Do 100 external clock cycles
-    # for _ in range(100):
-    #     # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
-    #     await RisingEdge(dut.ui_in[0])
-    #     # await Timer(8, "ns")
-    # await Timer(800, "ns")
+   
     await ext_clock(dut,1489)
 
     cocotb.log.info("Wait Done")
@@ -145,13 +111,9 @@ async def test_eclk(dut,tqv):
 
     # Compare
     assert l2 - l1 == 49
-    #     cocotb.log.info("OK")
-    # else:
-    #     cocotb.log.error(f"FAILED: expected 49, got {l2 - l1}")
 
 
 
-# test_ptc.py
 #
 # Top-level cocotb test converted from SV "initial begin" block
 #
@@ -165,8 +127,6 @@ async def ptc_verification(dut):
 
     clock = Clock(dut.clk, 8, units="ns")
     cocotb.start_soon(clock.start())
-    # ext_clk = Clock(dut.ui_in[0], 8, units="ns")
-    # cocotb.start_soon(ext_clk.start())
     await tqv.reset()
 
     # Display banners
@@ -182,5 +142,3 @@ async def ptc_verification(dut):
     cocotb.log.info("###")
     cocotb.log.info("")
 
-    # # End of simulation
-    # raise TestSuccess("PTC IP Core Verification completed")
