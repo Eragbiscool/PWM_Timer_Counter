@@ -21,7 +21,7 @@ PTC_RPTC_CTRL_CNTRRST = 7
 # ----------------------------------------------------------------------
 # Task translations
 # ----------------------------------------------------------------------
-
+PERIPHERAL_NUM = 0
 async def generate_clock(dut, period_ns=8):
     """Generate clock on dut.clk"""
     cocotb.start_soon(Clock(dut.ui_in[0], period_ns, units="ns").start())
