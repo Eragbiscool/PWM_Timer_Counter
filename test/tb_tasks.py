@@ -87,9 +87,9 @@ async def getcntr(dut,tqv):
 async def ext_clock(dut):
     for _ in range(100):
         dut.ui_in[0].value = 1
-        await Timer(2, units="ns")   # low for 1 ns
+        await Timer(3, units="ns")   # low for 1 ns
         dut.ui_in[0].value = 0
-        await Timer(2, units="ns")
+        await Timer(3, units="ns")
         # await Timer(1, units="ns")   # high for 1 ns
 
 # ----------------------------------------------------------------------
