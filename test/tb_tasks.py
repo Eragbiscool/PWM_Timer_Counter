@@ -89,7 +89,7 @@ async def ext_clock(dut):
         dut.ui_in[0].value = 1
         await Timer(3, units="ns")   # low for 1 ns
         dut.ui_in[0].value = 0
-        await Timer(3, units="ns")
+        await Timer(4, units="ns")
         # await Timer(1, units="ns")   # high for 1 ns
 
 # ----------------------------------------------------------------------
