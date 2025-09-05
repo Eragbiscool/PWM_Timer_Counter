@@ -97,7 +97,6 @@ async def test_eclk(dut,tqv):
     cocotb.log.info("High HRC Set")
     await setlrc(dut,(0xFFFFFFFF),tqv)
     cocotb.log.info("High LRC Set")
-    cocotb.log.info(f"HRC Reg: {dut.test_harness.test_harness.rptc_hrc.value}")
     # Enable PTC
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
