@@ -107,7 +107,7 @@ async def test_eclk(dut,tqv):
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
     # Wait for time to advance
-    yield Timer(400, units='ns')
+    await Timer(400, units='ns')
     cocotb.log.info("Wait Done")
 
     l1 = await getcntr(dut,tqv)
