@@ -129,7 +129,7 @@ async def test_eclk(dut,tqv):
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
     cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
-    await ClockCycles(dut.clk, 100)
+    await Timer(400, "ns")
     cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
     # for _ in range(100):
     #     await RisingEdge(dut.clk)
