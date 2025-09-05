@@ -85,7 +85,7 @@ async def getcntr():
 # Test converted from SV "test_eclk" task
 # ----------------------------------------------------------------------
 
-async def test_eclk(dut):
+async def test_eclk():
     """Testing control bit RPTC_CTRL[ECLK]"""
 
     cocotb.log.info("Testing control bit RPTC_CTRL[ECLK] ...")
@@ -138,7 +138,7 @@ async def ptc_verification(dut):
     """Top-level PTC IP Core Verification"""
 
     # Equivalent of SV variable initializations
-
+    tqv = TinyQV(dut, PERIPHERAL_NUM)
     # Display banners
     cocotb.log.info("")
     cocotb.log.info("###")
@@ -147,7 +147,7 @@ async def ptc_verification(dut):
     cocotb.log.info("I. Testing correct operation of RPTC_CTRL control bits")
     cocotb.log.info("")
 
-    await test_eclk(dut)
+    await test_eclk()
 
     cocotb.log.info("###")
     cocotb.log.info("")
