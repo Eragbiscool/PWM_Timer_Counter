@@ -114,10 +114,18 @@ async def test_eclk(dut,tqv):
     cocotb.log.info("Control Set")
 
     # Do 100 external clock cycles
+    # for _ in range(100):
+    #     # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
+    #     await RisingEdge(dut.ui_in[0])
+    #     # await Timer(8, "ns")
+
+
     for _ in range(100):
-        # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
-        await RisingEdge(dut.ui_in[0])
-        # await Timer(8, "ns")
+        dut.ui_in[0].value = 0
+        await Timer(4, units="ns")
+        dut.ui_in[0].value = 1
+        await Timer(4, units="ns")
+
     cocotb.log.info("Wait Done")
 
     l2 = await getcntr(dut,tqv)
@@ -148,8 +156,8 @@ async def ptc_verification(dut):
 
     clock = Clock(dut.clk, 8, units="ns")
     cocotb.start_soon(clock.start())
-    ext_clk = Clock(dut.ui_in[0], 8, units="ns")
-    cocotb.start_soon(ext_clk.start())
+    # ext_clk = Clock(dut.ui_in[0], 8, units="ns")
+    # cocotb.start_soon(ext_clk.start())
     await tqv.reset()
 
     # Display banners
