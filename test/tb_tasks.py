@@ -173,5 +173,5 @@ async def ptc_verification(dut):
     cocotb.log.info("###")
     cocotb.log.info("")
 
-    # End of simulation
-    raise TestSuccess("PTC IP Core Verification completed")
+    # # End of simulation
+    # raise TestSuccess("PTC IP Core Verification completed")
