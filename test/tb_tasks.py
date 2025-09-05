@@ -26,7 +26,7 @@ async def generate_clock(dut, period_ns=8):
     """Generate clock on dut.clk"""
     cocotb.start_soon(Clock(dut.ui_in[0], period_ns, units="ns").start())
 
-async def wr(adr, dat):
+async def wr(dut,adr, dat):
     """Write transaction"""
     await RisingEdge(dut.clk)
     await Timer(1, "ns")
@@ -52,7 +52,7 @@ async def wr(adr, dat):
     await RisingEdge(dut.clk)
 
 
-async def rd(adr):
+async def rd(dut,adr):
     """Read transaction"""
 
     # await tqv.read_word_reg(adr)
@@ -65,49 +65,49 @@ async def rd(adr):
     return result
 
 
-async def setctrl(val):
-    await wr((PTC_RPTC_CTRL << 2), val)
+async def setctrl(dut,val):
+    await wr(dut,(PTC_RPTC_CTRL << 2), val)
 
 
-async def sethrc(val):
-    await wr((PTC_RPTC_HRC << 2), val)
+async def sethrc(dut,val):
+    await wr(dut,(PTC_RPTC_HRC << 2), val)
 
 
-async def setlrc(val):
-    await wr((PTC_RPTC_LRC << 2), val)
+async def setlrc(dut,val):
+    await wr(dut,(PTC_RPTC_LRC << 2), val)
 
 
-async def getcntr():
-    tmp = await rd((PTC_RPTC_CNTR << 2))
+async def getcntr(dut):
+    tmp = await rd(dut,(PTC_RPTC_CNTR << 2))
     return tmp
 
 # ----------------------------------------------------------------------
 # Test converted from SV "test_eclk" task
 # ----------------------------------------------------------------------
 
-async def test_eclk():
+async def test_eclk(dut):
     """Testing control bit RPTC_CTRL[ECLK]"""
 
     cocotb.log.info("Testing control bit RPTC_CTRL[ECLK] ...")
 
     # Reset counter
-    await setctrl(1 << PTC_RPTC_CTRL_CNTRRST)
+    await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST))
 
     # Set HRC and LRC to max
-    await sethrc(0xFFFFFFFF)
-    await setlrc(0xFFFFFFFF)
+    await sethrc(dut,(0xFFFFFFFF))
+    await setlrc(dut,(0xFFFFFFFF))
 
     # Enable PTC
-    await setctrl(1 << PTC_RPTC_CTRL_EN)
+    await setctrl(dut,(1 << PTC_RPTC_CTRL_EN)
 
     # Wait for time to advance
     await Timer(400, "ns")
 
-    l1 = await getcntr()
+    l1 = await getcntr(dut)
 
     # Phase 2
-    await setctrl(1 << PTC_RPTC_CTRL_CNTRRST)
-    await setctrl((1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK))
+    await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST))
+    await setctrl(dut,((1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK)))
 
     # Do 100 external clock cycles
     for _ in range(100):
@@ -115,7 +115,7 @@ async def test_eclk():
         await RisingEdge(dut.ui_in[0])
         # await Timer(8, "ns")
 
-    l2 = await getcntr()
+    l2 = await getcntr(dut)
 
     
     cocotb.log.info(f"l1 = {l1} and l2= {l2}")
@@ -147,7 +147,7 @@ async def ptc_verification(dut):
     cocotb.log.info("I. Testing correct operation of RPTC_CTRL control bits")
     cocotb.log.info("")
 
-    await test_eclk()
+    await test_eclk(dut)
 
     cocotb.log.info("###")
     cocotb.log.info("")
