@@ -4,6 +4,8 @@ import cocotb
 from cocotb.triggers import RisingEdge, Timer
 from cocotb.clock import Clock
 
+from tqv_reg import spi_write_cpha0, spi_read_cpha0
+
 from tqv import TinyQV
 
 # ----------------------------------------------------------------------
@@ -30,7 +32,9 @@ async def wr(dut,adr, dat,tqv):
     # await RisingEdge(dut.clk)
     # await Timer(1, "ns")
 
-    await tqv.write_word_reg(adr, dat)
+    # await tqv.write_word_reg(adr, dat)
+    await spi_write_cpha0(dut.clk, dut.uio_in, adr, dat, 2)
+    await spi_write_cpha0(dut.clk, dut.uio_in, adr, dat, 3)
     
     # await RisingEdge(dut.clk)
     # await RisingEdge(dut.clk)
@@ -58,7 +62,10 @@ async def rd(dut,adr,tqv):
 
     # await Timer(1, "ns")
 
-    result = await tqv.read_word_reg(adr)
+    # result = await tqv.read_word_reg(adr)
+
+    result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
+    # result = await spi_read_cpha0(dut.clk, dut.uio_in, dut.uio_out, dut.uio_out[1], adr, 0, 2)
 
     return result
 
