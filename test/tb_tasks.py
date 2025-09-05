@@ -107,7 +107,7 @@ async def test_eclk(dut,tqv):
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
     # Wait for time to advance
-    await Timer(400, units='ns')
+    await Timer(50, units='ns')
     cocotb.log.info("Wait Done")
 
     l1 = await getcntr(dut,tqv)
@@ -124,13 +124,13 @@ async def test_eclk(dut,tqv):
     #     # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
-    await Timer(800, "ns")
+    # await Timer(800, "ns")
     for _ in range(100):
         await Timer(1, "ns")
         dut.ui_in[0].value = 1
-        await Timer(4, units="ns")
+        await Timer(1, units="ns")
         dut.ui_in[0].value = 0
-        await Timer(4, units="ns")
+        await Timer(0, units="ns")
 
     cocotb.log.info("Wait Done")
 
