@@ -23,11 +23,9 @@ PTC_RPTC_CTRL_CNTRRST = 7
 # ----------------------------------------------------------------------
 PERIPHERAL_NUM = 0
 async def generate_clock(dut, period_ns=8):
-    """Generate clock on dut.clk"""
     cocotb.start_soon(Clock(dut.ui_in[0], period_ns, units="ns").start())
 
 async def wr(dut,adr, dat):
-    """Write transaction"""
     await RisingEdge(dut.clk)
     await Timer(1, "ns")
 
@@ -53,7 +51,6 @@ async def wr(dut,adr, dat):
 
 
 async def rd(dut,adr):
-    """Read transaction"""
 
     # await tqv.read_word_reg(adr)
 
@@ -86,36 +83,44 @@ async def getcntr(dut):
 # ----------------------------------------------------------------------
 
 async def test_eclk(dut):
-    """Testing control bit RPTC_CTRL[ECLK]"""
 
     cocotb.log.info("Testing control bit RPTC_CTRL[ECLK] ...")
 
     # Reset counter
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST))
 
+    cocotb.log.info("Control Reset")
+
     # Set HRC and LRC to max
     await sethrc(dut,(0xFFFFFFFF))
+    cocotb.log.info("High HRC Set")
     await setlrc(dut,(0xFFFFFFFF))
-
+    cocotb.log.info("High LRC Set")
     # Enable PTC
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN))
+    cocotb.log.info("Control Set")
 
     # Wait for time to advance
     await Timer(400, "ns")
+    cocotb.log.info("Wait Done")
 
     l1 = await getcntr(dut)
-
+    cocotb.log.info("L1 collected")
     # Phase 2
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST))
+    cocotb.log.info("Control Reset")
     await setctrl(dut,((1 << PTC_RPTC_CTRL_EN) | (1 << PTC_RPTC_CTRL_ECLK)))
+    cocotb.log.info("Control Set")
 
     # Do 100 external clock cycles
     for _ in range(100):
         # dut.ptc_ecgt.value = not dut.ptc_ecgt.value
         await RisingEdge(dut.ui_in[0])
         # await Timer(8, "ns")
+    cocotb.log.info("Wait Done")
 
     l2 = await getcntr(dut)
+    cocotb.log.info("L2 collected")
 
     
     cocotb.log.info(f"l1 = {l1} and l2= {l2}")
@@ -135,7 +140,6 @@ async def test_eclk(dut):
 
 @cocotb.test()
 async def ptc_verification(dut):
-    """Top-level PTC IP Core Verification"""
 
     # Equivalent of SV variable initializations
     tqv = TinyQV(dut, PERIPHERAL_NUM)
