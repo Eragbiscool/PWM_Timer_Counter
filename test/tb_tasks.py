@@ -130,7 +130,7 @@ async def test_eclk(dut,tqv):
     #     await RisingEdge(dut.ui_in[0])
     #     # await Timer(8, "ns")
     cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
-    await Timer(400, "ns")
+    await Timer(800, "ns")
     cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
     # for _ in range(100):
     #     await RisingEdge(dut.clk)
@@ -170,8 +170,8 @@ async def ptc_verification(dut):
 
     clock = Clock(dut.clk, 8, units="ns")
     cocotb.start_soon(clock.start())
-    # ext_clk = Clock(dut.ui_in[0], 8, units="ns")
-    # cocotb.start_soon(ext_clk.start())
+    ext_clk = Clock(dut.ui_in[0], 8, units="ns")
+    cocotb.start_soon(ext_clk.start())
     await tqv.reset()
 
     # Display banners
