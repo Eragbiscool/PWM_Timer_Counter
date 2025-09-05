@@ -2,6 +2,7 @@
 
 import cocotb
 from cocotb.triggers import RisingEdge, Timer
+from cocotb.clock import Clock
 
 from tqv import TinyQV
 
