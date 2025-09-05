@@ -76,7 +76,7 @@ async def setlrc(dut,val,tqv):
 
 
 async def getcntr(dut,tqv):
-    tmp = rd(dut,(PTC_RPTC_CNTR << 2),tqv)
+    tmp = await rd(dut,(PTC_RPTC_CNTR << 2),tqv)
     return tmp
 
 # ----------------------------------------------------------------------
@@ -100,13 +100,13 @@ async def test_eclk(dut,tqv):
     # Enable PTC
     await setctrl(dut,(1 << PTC_RPTC_CTRL_EN),tqv)
     cocotb.log.info("Control Set")
-    cocotb.log.info(f"l1 = {getcntr(dut,tqv)}")
+    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
     # Wait for time to advance
     await Timer(400, "ns")
     cocotb.log.info("Wait Done")
-    cocotb.log.info(f"l1 = {getcntr(dut,tqv)}")
+    cocotb.log.info(f"l1 = {await getcntr(dut,tqv)}")
 
-    l1 = getcntr(dut,tqv)
+    l1 = await getcntr(dut,tqv)
     cocotb.log.info("L1 collected")
     # Phase 2
     await setctrl(dut,(1 << PTC_RPTC_CTRL_CNTRRST),tqv)
@@ -126,11 +126,11 @@ async def test_eclk(dut,tqv):
         await Timer(4, units="ns")
         dut.ui_in[0].value = 1
         await Timer(4, units="ns")
-        cocotb.log.info(f"l2 = {getcntr(dut,tqv)}")
+        cocotb.log.info(f"l2 = {await getcntr(dut,tqv)}")
 
     cocotb.log.info("Wait Done")
 
-    l2 = getcntr(dut,tqv)
+    l2 = await getcntr(dut,tqv)
     cocotb.log.info("L2 collected")
 
     
