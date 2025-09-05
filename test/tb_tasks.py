@@ -85,7 +85,7 @@ async def getcntr(dut,tqv):
     return tmp
 
 async def ext_clock(dut):
-    for _ in range(100):
+    for _ in range(1092):
         dut.ui_in[0].value = 1
         await Timer(3, units="ns")   # low for 1 ns
         dut.ui_in[0].value = 0
