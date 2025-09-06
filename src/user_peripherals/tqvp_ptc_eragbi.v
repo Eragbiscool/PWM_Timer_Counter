@@ -6,7 +6,7 @@
 `default_nettype none
 
 
-`include "user_peripherals/ptc_defines.v"
+//`include "user_peripherals/ptc_defines.v"
 
 module tqvp_ptc_eragbi (
     input         clk,          // Clock - the TinyQV project clock is normally set to 64MHz.
