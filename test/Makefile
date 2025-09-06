@@ -5,7 +5,7 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = ptc_defines.v tqvp_ptc_eragbi.v
+PROJECT_SOURCES = user_peripherals/ptc_defines.v user_peripherals/tqvp_ptc_eragbi.v
 ADDITIONAL_SOURCES = tt_wrapper.v test_harness/*.sv
 
 ifneq ($(GATES),yes)
